@@ -3,8 +3,7 @@ require "../forrest.php";
 
 
 
-$forrest = new forrest(
-						[
+$forrest = new forrest([
 							"database_type" => "mysql",
 							"database_name"	=> "b2bhotels", 
 							"server"	    => "localhost",
@@ -12,8 +11,7 @@ $forrest = new forrest(
 							"password"		=> "leandevinc321",
 							"charset"	 	=> "utf8",
 
-						]	
-					);
+						]);
 
 
 $forrest->set('account_access');

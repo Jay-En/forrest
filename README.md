@@ -29,7 +29,7 @@ $forrest = new forrest([
     'password' => 'your_password',
     'charset' => 'utf8'
 ]);
-```
+``` 
 ## SELECT 
 
 ```php
