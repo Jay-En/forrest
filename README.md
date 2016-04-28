@@ -30,7 +30,8 @@ $forrest = new forrest([
     'charset' => 'utf8'
 ]);
 ```
->SELECT 
+# SELECT 
+
 ```php
 //select($table,$join,$where)
 $agents = $forrest->select('agent',[
@@ -47,7 +48,7 @@ $agents = $forrest->select('agent',[
 ]);
 
 ```
->INSERT 
+# INSERT 
 ```php
 //table($tablename)
 $forrest->table('account_access');
@@ -65,7 +66,7 @@ $result = $forrest->insert([
 						
 
 ```
->UPDATE 
+# UPDATE 
 ```php
 $forrest->set('account_access');
 
