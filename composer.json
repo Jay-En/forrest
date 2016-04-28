@@ -1,0 +1,13 @@
+{
+    "name": "jnbruno/forrest",
+    "description": "validator and database middleware for PHP",
+    "authors": [
+        {
+            "name": "John Noel",
+            "email": "jnbruno14@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": ["forrest.php"]
+    }
+}
