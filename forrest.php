@@ -2,7 +2,6 @@
 
 require_once dirname(__FILE__)."/medoo.php";
 require_once dirname(__FILE__)."/gump.class.php";
-require_once dirname(__FILE__)."/gump.validator.php";
 
 
 class forrest extends medoo
@@ -64,7 +63,7 @@ class forrest extends medoo
 		$this->parameter = [$table => $array];
 	}
 
-	public function set($table)
+	public function table($table)
 	{
 		$this->table = $table;
 	}
