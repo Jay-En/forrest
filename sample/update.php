@@ -14,7 +14,7 @@ $forrest = new forrest([
 						]);
 
 
-$forrest->set('account_access');
+$forrest->table('account_access');
 
 $forrest->addparameter([
 						'internal_user_id' => "required|numeric",
