@@ -6,10 +6,10 @@ require "../forrest.php";
 $user = new forrest(
 						[
 							"database_type" => "mysql",
-							"database_name"	=> "B2Bhotels", 
+							"database_name"	=> "database", 
 							"server"	    => "localhost",
 							"username"		=> "root",
-							"password"		=> "leandevinc321",
+							"password"		=> "password",
 							"charset"	 	=> "utf8",
 
 						]	
