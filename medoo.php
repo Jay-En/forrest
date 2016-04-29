@@ -1,4 +1,6 @@
 <?php
+
+require_once dirname(__FILE__)."/gump.class.php";
 /*!
  * Medoo database framework
  * http://medoo.in
@@ -7,7 +9,7 @@
  * Copyright 2016, Angel Lai
  * Released under the MIT license
  */
-class medoo
+class medoo extends GUMP
 {
 	// General
 	protected $database_type;
@@ -56,7 +58,7 @@ class medoo
 			}
 			else
 			{
-				return false;
+				throw new Exception("invalid database");
 			}
 
 			if (

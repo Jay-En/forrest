@@ -1,7 +1,6 @@
 <?php
 
 require_once dirname(__FILE__)."/medoo.php";
-require_once dirname(__FILE__)."/gump.class.php";
 
 
 class forrest extends medoo
@@ -71,7 +70,7 @@ class forrest extends medoo
 	public function insert($param)
 	{
 		if(isset($this->parameter[$this->table])){
-			return $this->validate($param, $this->parameter[$this->table], function($err, $params){
+			return $this->validateParams($param, $this->parameter[$this->table], function($err, $params){
 					if($err){
 						$this->error = $err;
 						return false;
@@ -107,7 +106,7 @@ class forrest extends medoo
 	public function update($param, $where)
 	{
 		if(isset($this->parameter[$this->table])){
-			return $this->validate($param, $this->removerequire($this->parameter[$this->table]), function($err, $params) use ($where){
+			return $this->validateParams($param, $this->removerequire($this->parameter[$this->table]), function($err, $params) use ($where){
 					if($err){
 						$this->error = $err;
 						return false;
@@ -123,7 +122,7 @@ class forrest extends medoo
 	}
 
 
-	public function validate($request, $validParam, $callback)
+	public function validateParams($request, $validParam, $callback)
 	{
 		
 

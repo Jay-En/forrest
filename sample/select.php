@@ -15,6 +15,7 @@ $user = new forrest(
 						]	
 					);
 
+
 $agents = $user->debug()->select('agent',
 					["[>]user" => "ON user.user_id = agent.user_id"]
 
