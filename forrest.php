@@ -67,12 +67,30 @@ class forrest extends medoo
 	public function table($table)
 	{
 		$this->table = $table;
-		
+
 		return $this;
 	}
 
-	public function insert($param)
+	public function insert($table, $param)
 	{
+		if(is_string($table)){
+			$this->table = $table;
+		}else{
+			$param = $table;
+		}
+
+		if(!is_array($params)){
+			throw new Exception('Insert parameter should be an array');
+		}
+
+		$this->insert_db($param);
+	}
+
+	private function insert_db($param)
+	{
+		if(!$this->table){
+			throw new Exception('Table is not set');
+		}
 		if(isset($this->parameter[$this->table])){
 			return $this->validateParams($param, $this->parameter[$this->table], function($err, $params){
 					if($err){
@@ -107,8 +125,32 @@ class forrest extends medoo
 		}
 	}
 
-	public function update($param, $where)
+	public function update($table, $param, $where = null)
 	{
+
+		if(is_string($table)){
+			$this->table = $table;
+		}else{
+			$param = $table;
+			$where = $param;
+		}
+
+		if(!is_array($params)){
+			throw new Exception('Insert parameter should be an array');
+		}
+		if(!is_array($where)){
+			throw new Exception('Where parameter should be an array');
+		}
+
+		$this->update_db($param,$where);
+	}
+
+	private function update_db($params, $where)
+	{
+
+		if(!$this->table){
+			throw new Exception('Table is not set');
+		}
 		if(isset($this->parameter[$this->table])){
 			return $this->validateParams($param, $this->removerequire($this->parameter[$this->table]), function($err, $params) use ($where){
 					if($err){
