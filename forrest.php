@@ -60,11 +60,14 @@ class forrest extends medoo
 		}
 
 		$this->parameter = [$table => $array];
+
+		return $this;
 	}
 
 	public function table($table)
 	{
 		$this->table = $table;
+		
 		return $this;
 	}
 
