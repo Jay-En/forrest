@@ -65,6 +65,7 @@ class forrest extends medoo
 	public function table($table)
 	{
 		$this->table = $table;
+		return $this;
 	}
 
 	public function insert($param)
