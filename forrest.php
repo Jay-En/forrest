@@ -219,10 +219,23 @@ class forrest extends medoo
 				}
 			}
 		}
+		
+		foreach ($param as $key => $value) {
+			if(is_array($value)){
+				$array_params[$key] = $value;
+				unset($param[$key]);
+			}
+		}
+
 		$param = $this->validator->sanitize( $param, array_keys($rule));
 		if(isset($filter)){
 			$param = $this->validator->filter($param, $filter);
 		}
+
+		if(isset($array_params)){
+			$param += $array_params;
+		}
+
 		$validated = $this->validator->validate( $param, $rule);
 
 		if($validated === true){
