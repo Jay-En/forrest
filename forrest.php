@@ -204,7 +204,7 @@ class forrest extends medoo
 						$rule[$key] = $value[0];
 					}
 
-					if (isset($value[1])){
+					if (isset($value[1])){ 
 						$filter[$key] = $value[1];
 					}
 
@@ -219,7 +219,7 @@ class forrest extends medoo
 				}
 			}
 		}
-		
+
 		foreach ($param as $key => $value) {
 			if(is_array($value)){
 				$array_params[$key] = $value;
