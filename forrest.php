@@ -173,21 +173,8 @@ class forrest extends medoo
 	}
 
 
-	public function validateParams($request, $validParam, $callback)
+	public function validateParams(array $param,array $validParam, $callback)
 	{
-		
-
-        if(is_array($request)){
-			
-			$param = $request;
-			
-		}else{
-			try{
-        		$param  = $request->getParsedBody();
-			}catch(Exception $e){
-				throw new Exception("Invalid parameter 1 in forrest->validate", 1);
-			}
-		}
 
 		if(!$param){
 			return $callback(["Input Error"], null);
