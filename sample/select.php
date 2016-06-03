@@ -21,7 +21,7 @@ $agents = $user->debug()->select('agent',
 
 	,['name','agent_id'],
 	[
-	"agent.user_id[>]" => 10,
+	"agent.name" => "--",
 	"LIMIT"	=> 5,
 	"ORDER" => "agent.user_id"
 	]);

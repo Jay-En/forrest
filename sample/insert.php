@@ -29,4 +29,6 @@ $result = $account_access->insert([
 						]);
 
 
-echo json_encode($result);exit;
+echo json_encode($result);
+
+

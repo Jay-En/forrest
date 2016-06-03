@@ -71,7 +71,7 @@ class forrest extends medoo
 		return $this;
 	}
 
-	public function insert($table, $param)
+	public function insert($table, $param = null)
 	{
 		if(is_string($table)){
 			$this->table = $table;
@@ -79,11 +79,11 @@ class forrest extends medoo
 			$param = $table;
 		}
 
-		if(!is_array($params)){
+		if(!is_array($param)){
 			throw new Exception('Insert parameter should be an array');
 		}
 
-		$this->insert_db($param);
+		return $this->insert_db($param);
 	}
 
 	private function insert_db($param)
@@ -113,7 +113,7 @@ class forrest extends medoo
 		}
 		else{
 
-			$result = parent::med_insert($this->table, $params);
+			$result = parent::med_insert($this->table, $param);
 
 			if($this->error()[2]){
 				$this->error = $this->error()[2];
@@ -142,7 +142,7 @@ class forrest extends medoo
 			throw new Exception('Where parameter should be an array');
 		}
 
-		$this->update_db($param,$where);
+		return $this->update_db($param,$where);
 	}
 
 	private function update_db($params, $where)
@@ -177,7 +177,11 @@ class forrest extends medoo
 			$param = $request;
 			
 		}else{
-        	$param  = $request->getParsedBody();
+			try{
+        		$param  = $request->getParsedBody();
+			}catch(Exception $e){
+				throw new Exception("Invalid parameter 1 in forrest->validate", 1);
+			}
 		}
 
 		if(!$param){
