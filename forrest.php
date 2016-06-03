@@ -50,6 +50,11 @@ class forrest extends medoo
 	    });
 
 
+		GUMP::add_validator("array", function($field, $input, $param = NULL) {
+			
+			return is_array($input[$field]);
+	    });
+
 
 	}
 

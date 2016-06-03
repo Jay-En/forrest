@@ -690,6 +690,9 @@ class GUMP
                 case 'validate_unique':
                     $resp[$field] = "The $field field must be unique";
                     break;
+                case 'validate_array':
+                    $resp[$field] = "The $field field must be array";
+                    break;
                 default:
                 var_dump($e['rule']);exit;
                     $resp[$field] = "The $field field is invalid";
