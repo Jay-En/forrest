@@ -662,7 +662,7 @@ class medoo extends GUMP
 		return 'SELECT ' . $column . ' FROM ' . $table . $this->where_clause($where);
 	}
 
-	public function select($table, $join, $columns = null, $where = null)
+	public function select_db($table, $join, $columns = null, $where = null)
 	{
 		$query = $this->query($this->select_context($table, $join, $columns, $where));
 

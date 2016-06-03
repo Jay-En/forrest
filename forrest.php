@@ -58,6 +58,19 @@ class forrest extends medoo
 
 	}
 
+	public function select($table, $join = null, $columns = null, $where = null)
+	{
+		if(!is_string($table)){
+			if($this->table){
+				$where = $columns;
+				$columns = $join;
+				$join = $table;
+				$table = $this->table;
+			}
+		}
+
+	    return $this->select_db($table, $join, $columns, $where);
+	}
 	public function addparameter($array, $table = "")
 	{
 		if(!$table){
