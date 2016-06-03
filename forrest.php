@@ -30,7 +30,7 @@ class forrest extends medoo
 			if(!$this->has($this->table,[$field => $input[$field]]))
 				return true;
 
-			return false;
+			return false; 
 	    });
 
 
