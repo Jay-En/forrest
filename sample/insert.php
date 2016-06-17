@@ -3,7 +3,7 @@ require "../forrest.php";
 
 
 
-$account_access = new forrest(
+$test = new forrest(
 						[
 							"database_type" => "mysql",
 							"database_name"	=> "database", 
@@ -16,18 +16,21 @@ $account_access = new forrest(
 					);
 
 
-$account_access->table('account_access');
-
-$account_access->addparameter([
-								'internal_user_id' => "required|numeric",
-								'user_id'		   => "required|numeric"
-							]);
-
-$result = $account_access->insert([
-								'internal_user_id' => "1",
-								'user_id'		   => 1
+$result = $test ->table('test')
+				->rules([
+							'number' 			=> "required|numeric",
+							'text'		   		=> "required|min_len,6",
+							'email'		   	=> "required|valid_email"
+						])
+				->insert([
+								'number' 	   => "1",
+								'text'		   => "Forrest Test Text",
+								'email'		   => "me@jnbruno.com"
 						]);
 
+if($test->error()){
+	echo json_encode($test->error());
+}
 
 echo json_encode($result);
 

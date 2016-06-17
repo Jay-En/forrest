@@ -8,6 +8,7 @@ class forrest extends medoo
 
 	protected $parameter;
 	protected $table;
+	protected $sanitize = false;
 	public $error;
 	public $validator;
 	public function __construct($options = null)
@@ -52,13 +53,15 @@ class forrest extends medoo
 
 		GUMP::add_validator("array", function($field, $input, $param = NULL) {
 			
-			return is_array($input[$field]);
+			if(isset($input[$field])){
+				return is_array($input[$field]);
+			}
 	    });
 
 
 	}
 
-	public function addparameter($array, $table = "")
+	public function rules($array, $table = "")
 	{
 		if(!$table){
 			$table = $this->table;
@@ -105,11 +108,6 @@ class forrest extends medoo
 
 			$result = parent::med_insert($this->table, $params);
 
-			if($this->error()[2]){
-				$this->error = $this->error()[2];
-				return false;
-			}
-
 			return $result;
 
 
@@ -119,11 +117,6 @@ class forrest extends medoo
 		else{
 
 			$result = parent::med_insert($this->table, $param);
-
-			if($this->error()[2]){
-				$this->error = $this->error()[2];
-				return false;
-			}
 
 			return $result;
 
@@ -136,12 +129,12 @@ class forrest extends medoo
 		if(is_string($table)){
 			$this->table = $table;
 		}else{
-			$param = $table;
 			$where = $param;
+			$param = $table;
 		}
-
-		if(!is_array($params)){
-			throw new Exception('Insert parameter should be an array');
+		
+		if(!is_array($param)){
+			throw new Exception('Parameter should be an array');
 		}
 		if(!is_array($where)){
 			throw new Exception('Where parameter should be an array');
@@ -157,7 +150,7 @@ class forrest extends medoo
 			throw new Exception('Table is not set');
 		}
 		if(isset($this->parameter[$this->table])){
-			return $this->validateParams($param, $this->removerequire($this->parameter[$this->table]), function($err, $params) use ($where){
+			return $this->validateParams($params, $this->removerequire($this->parameter[$this->table]), function($err, $params) use ($where){
 					if($err){
 						$this->error = $err;
 						return false;
@@ -213,8 +206,10 @@ class forrest extends medoo
 				unset($param[$key]);
 			}
 		}
+		if($this->sanitize === true){
+			$param = $this->validator->sanitize( $param, array_keys($rule));
+		}
 
-		$param = $this->validator->sanitize( $param, array_keys($rule));
 		if(isset($filter)){
 			$param = $this->validator->filter($param, $filter);
 		}
@@ -240,6 +235,11 @@ class forrest extends medoo
 
 
 	#remove required fields
+	public function setSanitize($status = true)
+	{
+		$this->sanitize = $status;
+	}
+
 
 	function removerequire($params)
 	{
@@ -248,6 +248,21 @@ class forrest extends medoo
 		}
 
 		return $params;
+	}
+
+
+	public function error()
+	{
+		$error = false;
+		if($this->pdo->errorInfo()[2]){
+			$error['database error'] = $this->pdo->errorInfo()[2];
+		}
+
+		if($this->error){
+			$error['validation error'] = $this->error;
+		}
+
+		return $error;
 	}
 
 }

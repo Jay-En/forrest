@@ -3,7 +3,8 @@ require "../forrest.php";
 
 
 
-$forrest = new forrest([
+$test = new forrest(
+						[
 							"database_type" => "mysql",
 							"database_name"	=> "database", 
 							"server"	    => "localhost",
@@ -11,20 +12,27 @@ $forrest = new forrest([
 							"password"		=> "password",
 							"charset"	 	=> "utf8",
 
-						]);
+						]	
+					);
 
 
-$forrest->table('account_access');
+$result = $test ->table('test')
+				->rules([
+							'number' 			=> "required|numeric",
+							'text'		   		=> ["required|min_len,6", "trim"],
+							'email'		   		=> "required|valid_email"
+						])
+			//	->update($items, $where)
+				->update([
+								'number' 	   => "1",
+								'text'		   => "                 Forrest Test Update                 ",
+								'email'		   => "me@jnbruno.com"
+						], ['test_id' => 1]);
 
-$forrest->addparameter([
-						'internal_user_id' => "required|numeric",
-						'user_id'		   => "required|numeric"
-					]);
+if($test->error()){
+	echo json_encode($test->error());
+}
 
-$result = $forrest->update([
-								'user_id' => 2
-							],[
-								'user_id' => 1
-							]);
+echo json_encode($result);
 
-echo json_encode($result);exit;
+

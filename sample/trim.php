@@ -3,7 +3,7 @@ require "../forrest.php";
 
 
 
-$user_information = new forrest(
+$test = new forrest(
 						[
 							"database_type" => "mysql",
 							"database_name"	=> "database", 
@@ -15,19 +15,23 @@ $user_information = new forrest(
 						]	
 					);
 
-$user_information->table('user_information');
 
-$user_information->addparameter([
-								'first_name' 	=> ["required|min_len,1", "trim"],
-								'last_name'		=> ["required|min_len,1", "trim"],
-								'user_id'		=> "unique|min_len,1",
-							]);
+$result = $test ->table('test')
+				->rules([
+							'number' 			=> "required|numeric",
+							'text'		   		=> ["required|min_len,6", "trim"],
+							'email'		   	=> "required|valid_email"
+						])
+				->insert([
+								'number' 	   => "1",
+								'text'		   => "                 Forrest Test Text                 ",
+								'email'		   => "me@jnbruno.com"
+						]);
 
-$result = $user_information->insert([
-										'first_name'	=> "           JN            ",
-										'last_name'	=> "           Bruno            ",
-										'user_id'	=> 524
-								]);
+if($test->error()){
+	echo json_encode($test->error());
+}
 
-var_dump($user_information->error);exit;
-echo json_encode($result);exit;
+echo json_encode($result);
+
+

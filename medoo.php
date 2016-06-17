@@ -947,10 +947,6 @@ class medoo extends GUMP
 		return $this;
 	}
 
-	public function error()
-	{
-		return $this->pdo->errorInfo();
-	}
 
 	public function last_query()
 	{
