@@ -3,7 +3,7 @@ require "../forrest.php";
 
 
 
-$user = new forrest(
+$test = new forrest(
 						[
 							"database_type" => "mysql",
 							"database_name"	=> "database", 
@@ -15,34 +15,15 @@ $user = new forrest(
 						]	
 					);
 
-
-$agents = $user->debug()->select('agent',
-					["[>]user" => "ON user.user_id = agent.user_id"]
-
-	,['name','agent_id'],
-	[
-	"agent.name" => "--",
-	"LIMIT"	=> 5,
-	"ORDER" => "agent.user_id"
-	]);
-
-echo "<br>";
-echo "<br>";
-echo "<br>";
-echo "<br>";
-$agents = $user->select('agent',[
-									"[>]user" => [
-													"user_id" => "user_id"
-												]
-							],[
-									'name as agent_name',
-									'agent_id'
+$result = $test->select('test',[
+									'number as this_is_number',
+									'text',
+									'email'
 									],
 									[
-									"agent.user_id[>]" => 10,
 									"LIMIT"	=> 5,
-									"ORDER" => "agent.user_id"
+									"ORDER" => "number ASC"
 ]);
 
 
-echo json_encode($agents);exit;
+echo json_encode($result);

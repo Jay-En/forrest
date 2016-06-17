@@ -34,52 +34,52 @@ $forrest = new forrest([
 
 ```php
 //select($table,$join,$where)
-$agents = $forrest->select('agent',[
-		"[>]user" => [
-			"user_id" => "user_id"
-		]
-    ],[
-		'name as agent_name',
-		'agent_id'
-	],[
-		"agent.user_id[>]" => 10,
-		"LIMIT"	=> 5,
-		"ORDER" => "agent.user_id"
+$test->select('test',[
+			'number as this_is_number',
+			'text',
+			'email'
+			],
+			[
+			"LIMIT"	=> 5,
+			"ORDER" => "number ASC"
 ]);
+
 
 ```
 ## INSERT 
 ```php
 //table($tablename)
-$forrest->table('account_access');
+$result = $test ->table('test')
 //add rules condition
-        ->addparameter([
-						'internal_user_id' => "required|numeric",
-						'user_id'		   => "unique|numeric"
-		]);
+				->rules([
+							'number' 	 => "required|numeric",
+							'text'		 => "required|min_len,6",
+							'email'		 => "required|valid_email"
+						])
 
 //validate then insert if valid
-$result = $forrest->insert([
-								'internal_user_id' => "1",
-								'user_id'		   => 1
+				->insert([
+							'number' 	 => "1",
+							'text'		 => "Forrest Test Text",
+							'email'		 => "me@jnbruno.com"
 						]);
-						
 
 ```
 ## UPDATE 
 ```php
-$forrest->set('account_access');
+$result = $test ->table('test')
+				->rules([
+							'number' 			=> "required|numeric",
+							'text'		   		=> ["required|min_len,6", "trim"],
+							'email'		   		=> "required|valid_email"
+						])
 
-$forrest->addparameter([
-						'internal_user_id' => "required|numeric",
-						'user_id'		   => "required|numeric"
-					]);
-
-$result = $forrest->update([
-                                'user_id' => 2
-							],[
-								'user_id' => 1
-							]);
+			//	->update($items, $where)
+				->update([
+								'number' 	   => "1",
+								'text'		   => "                 Forrest Test Update                 ",
+								'email'		   => "me@jnbruno.com"
+						], ['test_id' => 1]);
 ```
 ## License
 
