@@ -43,7 +43,7 @@ $test->select('test',[
 			"LIMIT"	=> 5,
 			"ORDER" => "number ASC"
 ]);
-
+ 
 
 ```
 ## INSERT 
