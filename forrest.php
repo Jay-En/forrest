@@ -10,54 +10,9 @@ class forrest extends medoo
 	protected $table;
 	protected $sanitize = false;
 	public $error;
-	public $validator;
 	public function __construct($options = null)
 	{
 		parent::__construct($options);
-		$this->validator = new GUMP();
-		$this->custom_validation();
-
-	}
-
-	public function custom_validation()
-	{
-		
-		GUMP::add_validator("unique", function($field, $input, $param = NULL) {
-			//var_dump($this->table,$input[$field]);exit;
-	        $param = trim(strtolower($param));
-
-	        $value = trim(strtolower($input[$field]));
-
-			if(!$this->has($this->table,[$field => $input[$field]]))
-				return true;
-
-			return false; 
-	    });
-
-
-		GUMP::add_validator("optional", function($field, $input, $param = NULL) {
-	        return true;
-	    });
-
-		GUMP::add_validator("notnull", function($field, $input, $param = NULL) {
-			if(!isset($input[$field])){
-				return true;
-			}
-			if($input[$field]){
-	        	return true;
-			}
-
-			return false;
-	    });
-
-
-		GUMP::add_validator("array", function($field, $input, $param = NULL) {
-			
-			if(isset($input[$field])){
-				return is_array($input[$field]);
-			}
-	    });
-
 
 	}
 
@@ -207,18 +162,18 @@ class forrest extends medoo
 			}
 		}
 		if($this->sanitize === true){
-			$param = $this->validator->sanitize( $param, array_keys($rule));
+			$param = $this->sanitize( $param, array_keys($rule));
 		}
 
 		if(isset($filter)){
-			$param = $this->validator->filter($param, $filter);
+			$param = $this->filter($param, $filter);
 		}
 
 		if(isset($array_params)){
 			$param += $array_params;
 		}
 
-		$validated = $this->validator->validate( $param, $rule);
+		$validated = $this->validate( $param, $rule);
 
 		if($validated === true){
             return $callback(null, $param);
@@ -227,7 +182,7 @@ class forrest extends medoo
             
 			$response['error']   = true;
         
-            $response = $this->validator->get_errors_array();
+            $response = $this->get_errors_array();
 			
             return $callback($response, null);
 		}
